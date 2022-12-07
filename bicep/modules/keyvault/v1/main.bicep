@@ -73,7 +73,7 @@ param workspaceId string = ''
     env: 'prod'
   }
 })
-param tags object = resourceGroup().tags
+param tags object = {}
 
 // Define a Key Vault
 resource vault 'Microsoft.KeyVault/vaults@2019-09-01' = {
