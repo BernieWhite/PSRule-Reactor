@@ -27,14 +27,29 @@ jobs:
   analyze:
     name: Analyze repository
     runs-on: ubuntu-latest
-    if: github.repository != 'Azure/PSRule.Rules.Azure-quickstart'
     steps:
 
     - name: Checkout
       uses: actions/checkout@v3
 
-    # Run analysis by using the PSRule GitHub action.
-    - name: Run PSRule analysis
-      uses: microsoft/ps-rule@v2.6.0
+    # # Run analysis by using the PSRule GitHub action.
+    # - name: Run PSRule analysis
+    #   uses: microsoft/ps-rule@v2.6.0
+    #   with:
+    #     modules: 'PSRule.Rules.Azure'
+
+    - uses: actions/setup-dotnet@v1
       with:
-        modules: 'PSRule.Rules.Azure'
+        dotnet-version: |
+          6.0.x
+
+    # Run analyzers
+    - name: Run Microsoft Security DevOps Analysis
+      uses: microsoft/security-devops-action@preview
+      id: msdo
+
+    # Upload alerts to the Security tab
+    - name: Upload alerts to Security tab
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: ${{ steps.msdo.outputs.sarifFile }}
