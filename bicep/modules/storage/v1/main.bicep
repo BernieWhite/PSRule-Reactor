@@ -18,7 +18,7 @@ param location string = resourceGroup().location
 param sku string = 'Standard_GRS'
 
 @description('Determines if any containers can be configured with the anonymous access types of blob or container.')
-param allowBlobPublicAccess bool = true
+param allowBlobPublicAccess bool = false
 
 @description('Tags to apply to the resource.')
 @metadata({
