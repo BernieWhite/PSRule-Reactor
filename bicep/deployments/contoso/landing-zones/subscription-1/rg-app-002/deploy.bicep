@@ -8,6 +8,10 @@
 @description('Configures the location to deploy the Azure resources.')
 param location string = resourceGroup().location
 
+resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
+  name: 'test-workspace'
+}
+
 // An example Storage Account
 module storage '../../../../../modules/storage/v1/main.bicep' = {
   name: 'storage-deployment'
@@ -39,7 +43,7 @@ module keyvault '../../../../../modules/keyvault/v1/main.bicep' = {
 
     // Must have a workspace
     // Try commenting out this line to have the Azure.KeyVault.Logs rule fail.
-    workspaceId: '/subscriptions/<subscription_id>/resourceGroups/rg-test/providers/Microsoft.OperationalInsights/workspaces/latest001'
+    workspaceId: workspace.id
 
     // An env tag must be test, dev, or prod.
     // Try setting this to 'demo' to fail the Org.Azure.Tags rule.
