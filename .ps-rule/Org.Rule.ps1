@@ -10,3 +10,8 @@ Rule 'Org.CodeOwners' -Type 'Microsoft.Authorization/policyExemptions' {
         'template/deployments/contoso/landing-zones/subscription-1/policy/'
     ));
 }
+
+# Synopsis: Always error
+Rule 'Error' {
+    $Assert.Fail();
+}
