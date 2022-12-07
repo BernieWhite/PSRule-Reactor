@@ -27,7 +27,7 @@ param allowBlobPublicAccess bool = true
     env: 'prod'
   }
 })
-param tags object = resourceGroup().tags
+param tags object = {}
 
 // Define a Storage Account
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
